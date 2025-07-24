@@ -2,8 +2,6 @@ package net.casezz.subtlehorror;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +11,6 @@ public class SubtleHorror implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-
+		SoundPlayerLogic.register();
 	}
 }
