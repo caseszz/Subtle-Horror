@@ -12,5 +12,6 @@ public class SubtleHorror implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		SoundPlayerLogic.register();
+		TorchPlacerLogic.register();
 	}
 }
