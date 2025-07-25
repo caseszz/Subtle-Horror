@@ -13,12 +13,12 @@ import net.minecraft.world.World;
 public class TorchPlaceLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5; //Checks every 5 minutes
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10; //Checks every 10 minutes
     private static final float CHANCE_PER_CHECK = 3.0f; //3% chance
     private static final int CHUNK_RADIUS = 5;
     private static final int MAX_TORCHES_PER_AREA = 5;
     private static final int SEARCH_RANGE_HORIZONTAL = 10;
-    private static final int SEARCH_RANGE_VERTICAL = 60;
+    private static final int SEARCH_RANGE_VERTICAL = 90;
 
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
@@ -33,9 +33,12 @@ public class TorchPlaceLogic {
                             for (int x = -CHUNK_RADIUS; x <= CHUNK_RADIUS; x++) {
                                 for (int z = -CHUNK_RADIUS; z <= CHUNK_RADIUS; z++) {
                                     // Attempts to put torches on the chunk
-                                    if (RANDOM.nextFloat() < CHANCE_PER_CHECK) {
+                                    if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
                                         BlockPos targetChunkOrigin = playerChunkOrigin.add(x * 16, 0, z * 16);
                                         placeTorchesInArea(world, targetChunkOrigin);
+                                    }
+                                    else{
+                                        System.out.println("DEBUG: No torches put");
                                     }
                                 }
                             }
