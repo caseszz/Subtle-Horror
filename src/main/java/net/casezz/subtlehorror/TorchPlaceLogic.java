@@ -10,11 +10,11 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class TorchPlacerLogic {
+public class TorchPlaceLogic {
 
     private static final Random RANDOM = Random.create();
     private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5;
-    private static final float CHANCE_PER_CHECK = 0.05f;
+    private static final float CHANCE_PER_CHECK = 3.0f;
     private static final int CHUNK_RADIUS = 5;
     private static final int MAX_TORCHES_PER_AREA = 5;
     private static final int SEARCH_RANGE_HORIZONTAL = 10;
