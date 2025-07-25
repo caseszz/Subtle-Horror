@@ -39,7 +39,7 @@ public class DoorOpeningLogic {
     }
 
     private static boolean openDoorInArea(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player) {
-        //Iterates over all blocks on the chunk
+        //Iterates over all nearest blocks on the chunk
         int baseY = player.getBlockY() - 4;
         for (int y = baseY; y < baseY + 8; y++){
             for (int x = 0; x < 16; x++){
@@ -48,11 +48,8 @@ public class DoorOpeningLogic {
                     BlockState state = world.getBlockState(currentPos);
                     Block block = state.getBlock();
 
-                    System.out.println("Checking: " + currentPos + " -> " + block.getTranslationKey());
-
                     //Check if block is a door
                     if (block instanceof DoorBlock) {
-                        System.out.println("DEBUG: Door found");
                         Vec3d playerEyePos = player.getEyePos();
                         Vec3d doorCenterPos = Vec3d.ofCenter(currentPos);
                         Vec3d toDoor = doorCenterPos.subtract(playerEyePos).normalize();
@@ -63,25 +60,23 @@ public class DoorOpeningLogic {
                         // Dot product between look direction and vector to door
                         double dot = lookVec.dotProduct(toDoor);
 
-                        // If player is looking too directly at the door, skip it
+                        // If player is looking at the door, skip it
                         if (dot > 0.2) {
-                            System.out.println("DEBUG: Skipping door because player is looking at it");
                             continue;
                         }
                         BooleanProperty OPEN = DoorBlock.OPEN;
 
+                        //Opens door
                         if (state.contains(DoorBlock.HALF) && state.get(DoorBlock.HALF) == DoubleBlockHalf.LOWER) {
                             boolean isOpen = state.get(OPEN);
                             world.setBlockState(currentPos, state.with(OPEN, !isOpen), 3);
                             playDoorSound(player);
-                            System.out.println("DEBUG: Door opened");
                         }
                         return true;
                     }
                 }
             }
         }
-        System.out.println("DEBUG: Door not found");
         return false;
     }
 
@@ -91,11 +86,11 @@ public class DoorOpeningLogic {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundEvents.BLOCK_WOODEN_DOOR_OPEN,
+                SoundEvents.BLOCK_WOODEN_DOOR_OPEN, //Maybe will change to other doors sounds in future updates
                 SoundCategory.BLOCKS,
                 0.5f,
                 1.0f
         );
-        System.out.println("DEBUG: Played sound near: " + player.getName().getString());
+        System.out.println("DEBUG: Opened door and played sound near: " + player.getName().getString());
     }
 }

@@ -35,14 +35,14 @@ public class LightningBoltLogic {
 
         BlockPos pos = player.getBlockPos();
 
-        lightning.setPos(pos.getX() + 4, pos.getY(), pos.getZ() + 3);
+        lightning.setPos(pos.getX() + 4, pos.getY(), pos.getZ() + 3); //Spawns near the player
 
         world.spawnEntity(lightning);
 
         System.out.println("DEBUG: Lightning Bolt summoned at X: " + pos.getX() + "Y: " + pos.getY() + "Z: " + pos.getZ());
 
         //Sets weather to thunder
-        int rainDurationTicks = 20 * 60 * 5;
+        int rainDurationTicks = 20 * 60 * 5; //5 minute duration
         world.setWeather(0, rainDurationTicks, true, true);
     }
 }
