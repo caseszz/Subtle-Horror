@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.messages;
 
 import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +10,7 @@ import net.minecraft.util.math.random.Random;
 public class FakeSleepMessageLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final float CHANCE_PERCENT = 20.0f;
+    private static final float CHANCE_PERCENT = 20.0f; //20% chance
 
     public static void register() {
         EntitySleepEvents.START_SLEEPING.register((entity, pos) -> {

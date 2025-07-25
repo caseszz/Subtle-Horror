@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.sounds;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -12,8 +12,8 @@ import net.minecraft.util.math.random.Random;
 
 public class BlockBreakSoundLogic {
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 2;
-    private static final float CHANCE_PERCENT = 1.0f;
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 2; //Checks every 2 minutes
+    private static final float CHANCE_PERCENT = 1.0f; //1% chance
 
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {

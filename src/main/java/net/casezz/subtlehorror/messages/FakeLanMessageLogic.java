@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.messages;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,8 +10,8 @@ import net.minecraft.server.MinecraftServer;
 public class FakeLanMessageLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10;
-    private static final float CHANCE_PERCENT = 1.0f;
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10; //Checks every 10 minutes
+    private static final float CHANCE_PERCENT = 1.0f; //1% chance
 
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {

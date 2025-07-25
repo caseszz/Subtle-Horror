@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.sounds;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -14,9 +14,8 @@ public class SoundPlayerLogic {
 
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 60;
-    //0.5% chance of sound playing every 60 ticks
-    private static final float CHANCE_PERCENT = 0.5f;
+    private static final int CHECK_INTERVAL_TICKS = 60; //Checks every 60 ticks
+    private static final float CHANCE_PERCENT = 0.5f; //0.5% chance
 
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {

@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.events;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -13,9 +13,9 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class TorchBreakLogic {
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5;
-    private static final float CHANCE_PER_CHECK = 2.0f;
-    private static final int SEARCH_RANGE_VERTICAL = 120;
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5; //Checks every 5 minutes
+    private static final float CHANCE_PER_CHECK = 2.0f; //2% chance
+    private static final int SEARCH_RANGE_VERTICAL = 120; //120 blocks vertical search range
 
     public static void register() {
         ServerTickEvents.END_SERVER_TICK.register(server -> {

@@ -1,4 +1,4 @@
-package net.casezz.subtlehorror;
+package net.casezz.subtlehorror.events;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 public class TorchPlaceLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5;
-    private static final float CHANCE_PER_CHECK = 3.0f;
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5; //Checks every 5 minutes
+    private static final float CHANCE_PER_CHECK = 3.0f; //3% chance
     private static final int CHUNK_RADIUS = 5;
     private static final int MAX_TORCHES_PER_AREA = 5;
     private static final int SEARCH_RANGE_HORIZONTAL = 10;
