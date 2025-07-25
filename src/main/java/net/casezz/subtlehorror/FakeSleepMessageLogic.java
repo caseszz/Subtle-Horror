@@ -13,13 +13,15 @@ public class FakeSleepMessageLogic {
     private static final float CHANCE_PERCENT = 20.0f;
 
     public static void register() {
-        EntitySleepEvents.START_SLEEPING.register((player, pos) -> {
-            if (!player.getWorld().isClient()) {
-                MinecraftServer server = player.getWorld().getServer();
+        EntitySleepEvents.START_SLEEPING.register((entity, pos) -> {
+            if (entity instanceof PlayerEntity player) {
+                if (!player.getWorld().isClient()) {
+                    MinecraftServer server = player.getWorld().getServer();
 
-                if (server != null && server.isSingleplayer() && server.getPlayerManager().getCurrentPlayerCount() == 1) {
-                    if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
-                        sendFakeSleepingMessage((PlayerEntity) player, server);
+                    if (server != null && server.isSingleplayer() && server.getPlayerManager().getCurrentPlayerCount() == 1) {
+                        if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
+                            sendFakeSleepingMessage(player, server);
+                        }
                     }
                 }
             }
