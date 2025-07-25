@@ -1,0 +1,48 @@
+package net.casezz.subtlehorror;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+
+public class LightningBoltLogic {
+
+    private static final Random RANDOM = Random.create();
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10;
+    private static final float CHANCE_PERCENT = 1.0f;
+
+    public static void register() {
+        ServerTickEvents.END_SERVER_TICK.register(server -> {
+            // Iterates over all players connected at the moment
+            for (PlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                if (player.age % CHECK_INTERVAL_TICKS == 0) {
+                    BlockPos playerPos = player.getBlockPos();
+                    ServerWorld world = (ServerWorld) player.getWorld();
+                    if (world.isSkyVisible(playerPos.up())) {
+                        if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
+                            summonLightningBolt(world, player);
+                        }
+                    }
+                }
+            }
+        });
+    }
+    private static void summonLightningBolt(ServerWorld world, PlayerEntity player){
+        LightningEntity lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
+
+        BlockPos pos = player.getBlockPos();
+
+        lightning.setPos(pos.getX() + 4, pos.getY(), pos.getZ() + 3);
+
+        world.spawnEntity(lightning);
+
+        System.out.println("DEBUG: Lightning Bolt summoned at X: " + pos.getX() + "Y: " + pos.getY() + "Z: " + pos.getZ());
+
+        //Sets weather to thunder
+        int rainDurationTicks = 20 * 60 * 5;
+        world.setWeather(0, rainDurationTicks, true, true);
+    }
+}

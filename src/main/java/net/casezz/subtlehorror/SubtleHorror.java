@@ -11,10 +11,12 @@ public class SubtleHorror implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		BlockBreakSoundLogic.register();
 		SoundPlayerLogic.register();
 		TorchPlaceLogic.register();
 		TorchBreakLogic.register();
 		FakeLanMessageLogic.register();
 		FakeSleepMessageLogic.register();
+		LightningBoltLogic.register();
 	}
 }
