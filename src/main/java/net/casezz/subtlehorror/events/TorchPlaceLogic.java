@@ -1,6 +1,6 @@
 package net.casezz.subtlehorror.events;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.casezz.subtlehorror.util.ModUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.WallTorchBlock;
@@ -21,28 +21,17 @@ public class TorchPlaceLogic {
     private static final int SEARCH_RANGE_VERTICAL = 90;
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (server.getTicks() % CHECK_INTERVAL_TICKS == 0) {
-                for (ServerWorld world : server.getWorlds()) {
-                    if (world.getRegistryKey() == World.OVERWORLD) {
-                        //Checks near potential chunks for every player
-                        server.getPlayerManager().getPlayerList().forEach(player -> {
-
-                            BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
-
-                            for (int x = -CHUNK_RADIUS; x <= CHUNK_RADIUS; x++) {
-                                for (int z = -CHUNK_RADIUS; z <= CHUNK_RADIUS; z++) {
-                                    // Attempts to put torches on the chunk
-                                    if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
-                                        BlockPos targetChunkOrigin = playerChunkOrigin.add(x * 16, 0, z * 16);
-                                        placeTorchesInArea(world, targetChunkOrigin);
-                                    }
-                                    else{
-                                        System.out.println("DEBUG: No torches put");
-                                    }
-                                }
-                            }
-                        });
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
+            if (player.getWorld().getRegistryKey() == World.OVERWORLD) {
+                BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
+                ServerWorld world = (ServerWorld) player.getWorld();
+                for (int x = -CHUNK_RADIUS; x <= CHUNK_RADIUS; x++) {
+                    for (int z = -CHUNK_RADIUS; z <= CHUNK_RADIUS; z++) {
+                        // Attempts to put torches on the chunk
+                        if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
+                            BlockPos targetChunkOrigin = playerChunkOrigin.add(x * 16, 0, z * 16);
+                            placeTorchesInArea(world, targetChunkOrigin);
+                        }
                     }
                 }
             }

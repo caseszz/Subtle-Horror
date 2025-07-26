@@ -1,37 +1,27 @@
 package net.casezz.subtlehorror.events;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.casezz.subtlehorror.util.ModUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class TorchBreakLogic {
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5; //Checks every 5 minutes
-    private static final float CHANCE_PER_CHECK = 2.0f; //2% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 5; //Checks every 5 minutes
+    private static final float CHANCE_PER_CHECK = 100.0f; //2% chance
     private static final int SEARCH_RANGE_VERTICAL = 120; //120 blocks vertical search range
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (server.getTicks() % CHECK_INTERVAL_TICKS == 0) {
-                for (ServerWorld world : server.getWorlds()) {
-                    if (world.getRegistryKey() == World.OVERWORLD) {
-                        server.getPlayerManager().getPlayerList().forEach(player -> {
-
-                            BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
-
-                            if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
-                                removeTorchesInArea(world, playerChunkOrigin, player);
-                            }
-                        });
-                    }
-                }
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
+            BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
+            ServerWorld world = (ServerWorld) player.getWorld();
+            if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
+                removeTorchesInArea(world, playerChunkOrigin, player);
             }
         });
     }

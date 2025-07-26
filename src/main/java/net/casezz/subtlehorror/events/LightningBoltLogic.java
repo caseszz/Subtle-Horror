@@ -1,5 +1,6 @@
 package net.casezz.subtlehorror.events;
 
+import net.casezz.subtlehorror.util.ModUtils;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -15,17 +16,12 @@ public class LightningBoltLogic {
     private static final float CHANCE_PERCENT = 1.0f; //1% chance
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            // Iterates over all players connected at the moment
-            for (PlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                if (player.age % CHECK_INTERVAL_TICKS == 0) {
-                    BlockPos playerPos = player.getBlockPos();
-                    ServerWorld world = (ServerWorld) player.getWorld();
-                    if (world.isSkyVisible(playerPos.up())) {
-                        if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
-                            summonLightningBolt(world, player);
-                        }
-                    }
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
+            BlockPos playerPos = player.getBlockPos();
+            ServerWorld world = (ServerWorld) player.getWorld();
+            if (world.isSkyVisible(playerPos.up())) {
+                if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
+                    summonLightningBolt(world, player);
                 }
             }
         });

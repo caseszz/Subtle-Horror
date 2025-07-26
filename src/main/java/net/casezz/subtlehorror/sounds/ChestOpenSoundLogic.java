@@ -1,6 +1,6 @@
 package net.casezz.subtlehorror.sounds;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.casezz.subtlehorror.util.ModUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -22,19 +22,12 @@ public class ChestOpenSoundLogic {
     private static final float CHANCE_PER_CHECK = 3.0f; //3% chance
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (server.getTicks() % CHECK_INTERVAL_TICKS == 0) {
-                for (ServerWorld world : server.getWorlds()) {
-                    if (world.getRegistryKey() == World.OVERWORLD) {
-                        server.getPlayerManager().getPlayerList().forEach(player -> {
-
-                            BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
-
-                            if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
-                                chestOpen(world, playerChunkOrigin, player);
-                            }
-                        });
-                    }
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
+            if (player.getWorld().getRegistryKey() == World.OVERWORLD) {
+                BlockPos playerChunkOrigin = player.getChunkPos().getStartPos();
+                ServerWorld world = (ServerWorld) player.getWorld();
+                if (RANDOM.nextFloat() * 100 < CHANCE_PER_CHECK) {
+                    chestOpen(world, playerChunkOrigin, player);
                 }
             }
         });

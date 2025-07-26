@@ -1,6 +1,6 @@
 package net.casezz.subtlehorror.sounds;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.casezz.subtlehorror.util.ModUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,18 +16,14 @@ public class BlockBreakSoundLogic {
     private static final float CHANCE_PERCENT = 1.0f; //1% chance
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            if (server.getTicks() % CHECK_INTERVAL_TICKS == 0) {
-                for (PlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                    if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
-                        playBlockBreakSoundAtPlayerFeet((ServerWorld) player.getWorld(), player);
-                    }
-                }
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server,player) -> {
+            if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
+                playBlockBreakSound((ServerWorld) player.getWorld(), player);
             }
         });
     }
 
-    private static void playBlockBreakSoundAtPlayerFeet(ServerWorld world, PlayerEntity player) {
+    private static void playBlockBreakSound(ServerWorld world, PlayerEntity player) {
         BlockPos blockUnderPlayerPos = player.getBlockPos().down();
 
         BlockState blockState = world.getBlockState(blockUnderPlayerPos);

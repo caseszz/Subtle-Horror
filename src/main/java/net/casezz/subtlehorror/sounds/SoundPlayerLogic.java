@@ -1,5 +1,6 @@
 package net.casezz.subtlehorror.sounds;
 
+import net.casezz.subtlehorror.util.ModUtils;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,15 +19,10 @@ public class SoundPlayerLogic {
     private static final float CHANCE_PERCENT = 0.5f; //0.5% chance
 
     public static void register() {
-        ServerTickEvents.END_SERVER_TICK.register(server -> {
-            // Iterates over all players connected at the moment
-            for (PlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                if (player.age % CHECK_INTERVAL_TICKS == 0) {
-                    if (isPlayerInCave(player)) {
-                        if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
-                            playCaveSound(player);
-                        }
-                    }
+        ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
+            if (isPlayerInCave(player)) {
+                if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
+                    playCaveSound(player);
                 }
             }
         });

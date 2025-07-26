@@ -17,8 +17,8 @@ public class FakeSleepMessageLogic {
             if (entity instanceof PlayerEntity player) {
                 if (!player.getWorld().isClient()) {
                     MinecraftServer server = player.getWorld().getServer();
-
-                    if (server != null && server.isSingleplayer() && server.getPlayerManager().getCurrentPlayerCount() == 1) {
+                    //Only works if only one player is playing
+                    if (server != null && server.getPlayerManager().getCurrentPlayerCount() == 1) {
                         if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
                             sendFakeSleepingMessage(player, server);
                         }
