@@ -1,10 +1,8 @@
 package net.casezz.subtlehorror;
 
 import net.casezz.subtlehorror.events.*;
-import net.casezz.subtlehorror.messages.FakeLanMessageLogic;
-import net.casezz.subtlehorror.messages.FakeSleepMessageLogic;
-import net.casezz.subtlehorror.sounds.BlockBreakSoundLogic;
-import net.casezz.subtlehorror.sounds.SoundPlayerLogic;
+import net.casezz.subtlehorror.messages.*;
+import net.casezz.subtlehorror.sounds.*;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -24,5 +22,6 @@ public class SubtleHorror implements ModInitializer {
 		FakeSleepMessageLogic.register();
 		LightningBoltLogic.register();
 		DoorOpeningLogic.register();
+		ChestOpenSoundLogic.register();
 	}
 }
