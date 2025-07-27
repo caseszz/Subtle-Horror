@@ -12,8 +12,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class TorchBreakLogic {
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 5; //Checks every 5 minutes
-    private static final float CHANCE_PER_CHECK = 100.0f; //2% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 20; //Checks every 20 seconds
+    private static final float CHANCE_PER_CHECK = 0.5f; //0.5% chance
     private static final int SEARCH_RANGE_VERTICAL = 120; //120 blocks vertical search range
 
     public static void register() {

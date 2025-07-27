@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -15,8 +16,8 @@ public class SoundPlayerLogic {
 
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 60; //Checks every 60 ticks
-    private static final float CHANCE_PERCENT = 0.5f; //0.5% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 20; //Checks every 20 seconds
+    private static final float CHANCE_PERCENT = 0.5f; //5% chance
 
     public static void register() {
         ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {

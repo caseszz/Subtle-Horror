@@ -12,7 +12,7 @@ import net.minecraft.util.math.random.Random;
 public class LightningBoltLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10; //Checks every 10 minutes
+    private static final int CHECK_INTERVAL_TICKS = 20 * 45; //Checks every 45 seconds
     private static final float CHANCE_PERCENT = 1.0f; //1% chance
 
     public static void register() {

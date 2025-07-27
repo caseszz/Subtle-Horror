@@ -12,8 +12,8 @@ import net.minecraft.util.math.random.Random;
 
 public class BlockBreakSoundLogic {
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 2; //Checks every 2 minutes
-    private static final float CHANCE_PERCENT = 1.0f; //1% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 10; //Checks every 10 seconds
+    private static final float CHANCE_PERCENT = 0.5f; //0.5% chance
 
     public static void register() {
         ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server,player) -> {

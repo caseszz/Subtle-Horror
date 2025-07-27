@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 public class DoorOpeningLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60; //Checks every minute
-    private static final float CHANCE_PER_CHECK = 3.0f; //3% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 20; //Checks every 20 seconds
+    private static final float CHANCE_PER_CHECK = 0.5f; //0.5% chance
 
     public static void register() {
         ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
@@ -32,7 +32,7 @@ public class DoorOpeningLogic {
         });
     }
 
-    private static boolean openDoorInArea(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player) {
+    public static boolean openDoorInArea(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player) {
         //Iterates over all nearest blocks on the chunk
         int baseY = player.getBlockY() - 4;
         for (int y = baseY; y < baseY + 8; y++){
@@ -65,8 +65,8 @@ public class DoorOpeningLogic {
                             boolean isOpen = state.get(OPEN);
                             world.setBlockState(currentPos, state.with(OPEN, !isOpen), 3);
                             playDoorSound(player);
+                            return true;
                         }
-                        return true;
                     }
                 }
             }

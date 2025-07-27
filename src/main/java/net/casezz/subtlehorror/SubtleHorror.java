@@ -1,5 +1,6 @@
 package net.casezz.subtlehorror;
 
+import net.casezz.subtlehorror.command.ModCommands;
 import net.casezz.subtlehorror.events.*;
 import net.casezz.subtlehorror.messages.*;
 import net.casezz.subtlehorror.sounds.*;
@@ -23,5 +24,6 @@ public class SubtleHorror implements ModInitializer {
 		LightningBoltLogic.register();
 		DoorOpeningLogic.register();
 		ChestOpenSoundLogic.register();
+		ModCommands.register();
 	}
 }

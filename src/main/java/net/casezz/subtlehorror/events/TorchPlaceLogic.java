@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 public class TorchPlaceLogic {
 
     private static final Random RANDOM = Random.create();
-    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 10; //Checks every 10 minutes
-    private static final float CHANCE_PER_CHECK = 3.0f; //3% chance
+    private static final int CHECK_INTERVAL_TICKS = 20 * 60 * 5; //Checks every 5 minutes
+    private static final float CHANCE_PER_CHECK = 30.0f; //30% chance
     private static final int CHUNK_RADIUS = 5;
     private static final int MAX_TORCHES_PER_AREA = 5;
     private static final int SEARCH_RANGE_HORIZONTAL = 10;
