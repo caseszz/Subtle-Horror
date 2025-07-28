@@ -18,7 +18,7 @@ public class TorchPlaceLogic {
     private static final int CHUNK_RADIUS = 5;
     private static final int MAX_TORCHES_PER_AREA = 5;
     private static final int SEARCH_RANGE_HORIZONTAL = 10;
-    private static final int SEARCH_RANGE_VERTICAL = 90;
+    private static final int SEARCH_RANGE_VERTICAL = 104;
 
     public static void register() {
         ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {

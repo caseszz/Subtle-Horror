@@ -33,7 +33,7 @@ public class ChestOpenSoundLogic {
         });
     }
 
-    private static boolean chestOpen(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player){
+    public static boolean chestOpen(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player){
         //Iterates over all nearest blocks on the chunk
         int baseY = player.getBlockY() - 4;
         for (int y = baseY; y < baseY + 8; y++){

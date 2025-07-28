@@ -20,13 +20,13 @@ public class FakeLanMessageLogic {
             //Check if it's a Singleplayer or LAN world
             if (server.isSingleplayer()) {
                 if (RANDOM.nextFloat() * 100 < CHANCE_PERCENT) {
-                    sendFakeLanMessage(player, server);
+                    sendFakeLanMessage(server.getOverworld(), player);
                 }
             }
         });
     }
 
-    private static void sendFakeLanMessage(PlayerEntity player, MinecraftServer server) {
+    public static void sendFakeLanMessage(ServerWorld server, PlayerEntity player) {
         int fakePort = generateFakePort(); //Random fake port number
 
         Text message = Text.literal("Local game hosted on port ")

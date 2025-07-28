@@ -23,7 +23,7 @@ public class BlockBreakSoundLogic {
         });
     }
 
-    private static void playBlockBreakSound(ServerWorld world, PlayerEntity player) {
+    public static void playBlockBreakSound(ServerWorld world, PlayerEntity player) {
         BlockPos blockUnderPlayerPos = player.getBlockPos().down();
 
         BlockState blockState = world.getBlockState(blockUnderPlayerPos);

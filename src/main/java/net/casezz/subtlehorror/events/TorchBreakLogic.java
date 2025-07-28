@@ -14,7 +14,7 @@ public class TorchBreakLogic {
     private static final Random RANDOM = Random.create();
     private static final int CHECK_INTERVAL_TICKS = 20 * 20; //Checks every 20 seconds
     private static final float CHANCE_PER_CHECK = 0.5f; //0.5% chance
-    private static final int SEARCH_RANGE_VERTICAL = 120; //120 blocks vertical search range
+    private static final int SEARCH_RANGE_VERTICAL = 384; //384 blocks vertical search range
 
     public static void register() {
         ModUtils.playerTickHandler(CHECK_INTERVAL_TICKS, (server, player) -> {
@@ -26,7 +26,7 @@ public class TorchBreakLogic {
         });
     }
 
-    private static void removeTorchesInArea(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player) {
+    public static boolean removeTorchesInArea(ServerWorld world, BlockPos chunkOrigin, PlayerEntity player) {
         int torchesBroken = 0;
         boolean foundTorch = false;
 
@@ -51,8 +51,11 @@ public class TorchBreakLogic {
         }
 
         // Play cave sound
-        if (foundTorch)
+        if (foundTorch) {
             playCaveSound(player);
+            return true;
+        }
+        return false;
     }
 
     private static void playCaveSound(PlayerEntity player) {

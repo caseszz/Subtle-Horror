@@ -26,7 +26,7 @@ public class LightningBoltLogic {
             }
         });
     }
-    private static void summonLightningBolt(ServerWorld world, PlayerEntity player){
+    public static void summonLightningBolt(ServerWorld world, PlayerEntity player){
         LightningEntity lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
 
         BlockPos pos = player.getBlockPos();
