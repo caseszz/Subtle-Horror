@@ -31,8 +31,9 @@ public class ModCommands {
                             .then(CommandManager.literal("break_block")
                                     .executes(ModCommands::executeBreakingBlock))
                             .then(CommandManager.literal("fake_lan")
-                                    .executes(ModCommands::executeLANMessage)))
-
+                                    .executes(ModCommands::executeLANMessage))
+                            .then(CommandManager.literal("steps")
+                                    .executes(ModCommands::executeSteps)))
             );
         });
     }
@@ -98,12 +99,20 @@ public class ModCommands {
         );
     }
 
-
+    //Fake LAN Message Command
     private static int executeLANMessage(CommandContext<ServerCommandSource> context){
         return ModUtils.simpleEvent(
                 context,
                 FakeLanMessageLogic::sendFakeLanMessage,
                 player -> buildFeedback("Sent fake LAN message to ", player)
+        );
+    }
+
+    private static int executeSteps(CommandContext<ServerCommandSource> context){
+        return ModUtils.simpleEvent(
+                context,
+                SoundPlayerLogic::playStepsSound,
+                player -> buildFeedback("Played steps sounds to ", player)
         );
     }
 

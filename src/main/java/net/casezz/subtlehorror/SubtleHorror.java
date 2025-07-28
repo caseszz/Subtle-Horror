@@ -6,6 +6,7 @@ import net.casezz.subtlehorror.messages.*;
 import net.casezz.subtlehorror.sounds.*;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,5 +26,8 @@ public class SubtleHorror implements ModInitializer {
 		DoorOpeningLogic.register();
 		ChestOpenSoundLogic.register();
 		ModCommands.register();
+		ServerTickEvents.END_SERVER_TICK.register(server -> {
+			SoundPlayerLogic.tickStepSequence();
+		});
 	}
 }
