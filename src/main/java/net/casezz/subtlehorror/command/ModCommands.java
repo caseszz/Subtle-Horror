@@ -10,7 +10,11 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+
+import java.util.function.BiFunction;
 
 public class ModCommands {
 
@@ -33,7 +37,9 @@ public class ModCommands {
                             .then(CommandManager.literal("fake_lan")
                                     .executes(ModCommands::executeLANMessage))
                             .then(CommandManager.literal("steps")
-                                    .executes(ModCommands::executeSteps)))
+                                    .executes(ModCommands::executeSteps))
+                            .then(CommandManager.literal("spawn_loot")
+                                    .executes(ModCommands::executeSpawnLoot)))
             );
         });
     }
@@ -108,12 +114,40 @@ public class ModCommands {
         );
     }
 
+    //Steps sound command
     private static int executeSteps(CommandContext<ServerCommandSource> context){
         return ModUtils.simpleEvent(
                 context,
                 SoundPlayerLogic::playStepsSound,
                 player -> buildFeedback("Played steps sounds to ", player)
         );
+    }
+
+    //Spawn loot command
+    private static int executeSpawnLoot(CommandContext<ServerCommandSource> context){
+    {
+            try {
+                PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
+                BlockPos playerPos = player.getBlockPos();
+                ServerWorld world = (ServerWorld) player.getWorld();
+
+                boolean result = LootDropEventLogic.triggerLoopDropEvent(world, playerPos, player);
+
+                if (result) {
+                    context.getSource().sendFeedback(() -> Text.literal("Dropped loot near ").
+                            append(Text.literal(player.getName().getString())), false);
+                }
+                else{
+                    context.getSource().sendFeedback(() -> Text.literal("Can't drop loot near ").
+                            append(Text.literal(player.getName().getString())), false);
+                }
+                return 1;
+            }
+            catch (Exception e){
+                context.getSource().sendError(Text.literal("Error executing command: ").append(Text.literal(e.getMessage())));
+                return 0;
+            }
+        }
     }
 
     //Help command

@@ -16,6 +16,7 @@ public class SubtleHorror implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		//Events
 		BlockBreakSoundLogic.register();
 		SoundPlayerLogic.register();
 		TorchPlaceLogic.register();
@@ -25,7 +26,12 @@ public class SubtleHorror implements ModInitializer {
 		LightningBoltLogic.register();
 		DoorOpeningLogic.register();
 		ChestOpenSoundLogic.register();
+		LootDropEventLogic.register();
+
+		//Commands
 		ModCommands.register();
+
+		//Tick Tracker
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			SoundPlayerLogic.tickStepSequence();
 		});

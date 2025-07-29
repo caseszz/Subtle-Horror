@@ -2,6 +2,8 @@ package net.casezz.subtlehorror.util;
 
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
@@ -84,5 +86,33 @@ public class ModUtils {
             context.getSource().sendError(Text.literal("Error executing command: ").append(Text.literal(e.getMessage())));
             return 0;
         }
+    }
+
+    //Check if player it's in cave
+    public static boolean isPlayerInCave(PlayerEntity player) {
+        if (!(player.getWorld() instanceof ServerWorld world)) {
+            return false;
+        }
+
+        BlockPos playerPos = player.getBlockPos();
+
+        if (!world.isSkyVisible(playerPos.up())){
+            final int MAX_CEILING_CHECK_HEIGHT = 10;
+            BlockPos currentCheckPos = playerPos.up(2);
+
+            //Also checks blocks above player
+            for (int i = 0; i < MAX_CEILING_CHECK_HEIGHT; i++){
+                BlockState blockAtCheckPos = world.getBlockState(currentCheckPos);
+
+                if(!blockAtCheckPos.isAir() && !blockAtCheckPos.isOf(Blocks.WATER) && !blockAtCheckPos.isOf(Blocks.LAVA)){
+                    if (blockAtCheckPos.isOf(Blocks.STONE) ||
+                            blockAtCheckPos.isOf(Blocks.DEEPSLATE)){
+                        return true;
+                    }
+                }
+                currentCheckPos = currentCheckPos.up();
+            }
+        }
+        return false;
     }
 }
